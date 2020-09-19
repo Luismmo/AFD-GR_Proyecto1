@@ -9,7 +9,7 @@ import subprocess
 class Menu():
     def __init__(self):
         self.boveda = []
-        valor ="teniaquehacerloYela"
+        valor ="teniaquehacerlo"
         teniaque = Aefede(valor)
         self.boveda.append(teniaque)        
         #self.GRS = []
@@ -17,7 +17,7 @@ class Menu():
     def Iniciar(self):
         self.clrsrc()
         print("Lenguajes Formales de programación")
-        print("Sección B-")
+        print("Sección B")
         print("Luis Amilcar Morales Xón \n201701059")
         input("\nPresione Enter para continuar")
         #self.clrsrc()
@@ -31,54 +31,23 @@ class Menu():
         while salida:
             self.clrsrc()
             print ("********** Menu **********\n")
-            print("1- Crear/Modificar AFD")
-            print("2- Crear/Modificar Gramática")
-            print("3- Evaluar Cadenas")
-            print("4- Cargar Archivo de Entrada")
-            print("5- Guardar archivo .afd o .grm")
-            print("6- Reportes")
-            print("7- Salir\n")
+            print("1- Modulo AFD")
+            print("2- Modulo de Gramática Regulares")
+            print("3- Acerda de")
+            print("4- Salir\n")
             opcion = int(input('Ingrese una opción: '))
             if opcion == 1:
                 self.clrsrc()
-                try:    
-                    self.SubAFD()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
+                self.SubAFD()                
             elif opcion == 2:
                 self.clrsrc()
-                try:
-                    self.SubGR()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
+                self.SubGR()                
             elif opcion == 3:
                 self.clrsrc()
-                try:
-                    self.SubEChain()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
+                self.AcerdaDe()
             elif opcion == 4:
-                self.clrsrc()
-                try:
-                    self.SubUpFi()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            elif opcion == 5:
-                self.clrsrc()
-                try:
-                    self.Save()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            elif opcion == 6:
-                self.clrsrc()
-                try:
-                    self.Reporte()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            elif opcion == 7:
-                self.clrsrc()        
-                #self.probando()                
-                exit()                               
+                self.clrsrc()                        
+                salida = False
             else:
                 self.clrsrc()
                 input("Ingrese una opción valida")
@@ -88,267 +57,99 @@ class Menu():
 ###pinche menu de aefedes
     def SubAFD(self):
         self.clrsrc()
-        rashos = input('Ingrese el nombre del AFD: ')
-        name = str(rashos)
-        flag=0
-        for i in range(len(self.boveda)):
-            if name == self.boveda[i].getName() and self.boveda[i].getTipo()=="AFD":
-                flag +=1
-        if flag!=0:
-            decision = input("\nEl elemento ya existe, ¿desea modificarlo?: si/no\n")
-            if decision == "si":
-                salidas = True
-                while salidas:
-                    self.clrsrc()
-                    print("********** Menú de AFD **********\n")
-                    print('1- Ingresar estados')
-                    print('2- Ingresar alfabeto')
-                    print('3- Estado inicial')
-                    print('4- Estados de aceptaciòn')
-                    print('5- Transiciones')
-                    print('6- Ayuda')
-                    print('7- Menu principal\n')
-                    opcion = int(input('Ingrese una opción: '))
-                    if opcion == 1:
-                            #input("ingresando estados")
-                        self.clrsrc()
-                        try:
-                            self.IngresarEstados(name)
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                            #self.probando()
-                    elif opcion == 2:
-                        self.clrsrc()
-                        try:
-                            self.IngresarAlfabeto(name)
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 3:
-                        self.clrsrc()
-                        try:
-                            self.EstadoInicial(name)
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                            #self.probando()
-                    elif opcion == 4:
-                        self.clrsrc()
-                        try:
-                            self.Aceptation(name)
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                            #self.probando()
-                    elif opcion == 5:
-                        self.clrsrc()
-                        try:
-                            self.Transicion(name)
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 6:
-                        self.clrsrc()
-                        self.Help()
-                    elif opcion == 7:
-                        salidas = False
-                        try:
-                            self.Menu()
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    else:
-                        self.clrsrc()
-                        input("Ingrese una opción valida")
-            elif decision == "no":
-                try:
-                    self.Menu()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-        else:
-            nuevoAFD = Aefede(name)
-            predetermindado = Estado("PR")
-            predetermindado.setAcepta(True)
-            nuevoAFD.setPrede(predetermindado)
-            self.boveda.append(nuevoAFD)             
-            salidas = True
-            while salidas:
+        salida1 = True
+        while salida1:            
+            print("********** Menú de AFD **********\n")
+            print('1- Crear AFD')
+            print('2- Cargar archivo')
+            print('3- Evaluar cadena')
+            print('4- Guardar AFD en archivo')
+            print('5- Generar reporte AFD')
+            print('6- Generar gramática regular')
+            print('7- Menu principal\n')
+            opcion = int(input('Ingrese una opción: '))
+            if opcion == 1:
+                #crear afd
                 self.clrsrc()
-                print("********** Menú de AFD **********\n")
-                print('1- Ingresar estados')
-                print('2- Ingresar alfabeto')
-                print('3- Estado inicial')
-                print('4- Estados de aceptaciòn')
-                print('5- Transiciones')
-                print('6- Ayuda')
-                print('7- Menu principal\n')
-                opcion = int(input('Ingrese una opción: '))
-                if opcion == 1:
-                        #input("ingresando estados")
-                    self.clrsrc()
-                    try:
-                        self.IngresarEstados(name)
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                        #self.probando()
-                elif opcion == 2:
-                    self.clrsrc()
-                    try:
-                        self.IngresarAlfabeto(name)
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                elif opcion == 3:
-                    self.clrsrc()
-                    try:
-                        self.EstadoInicial(name)
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                        #self.probando()
-                elif opcion == 4:
-                    self.clrsrc()
-                    try:
-                        self.Aceptation(name)
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                        #self.probando()
-                elif opcion == 5:
-                    self.clrsrc()
-                    try:
-                        self.Transicion(name)                       
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                elif opcion == 6:
-                    self.clrsrc()
-                    self.Help()
-                elif opcion == 7:
-                    salidas = False
-                    try:
-                        self.Menu()
-                    except:
-                        print("Parece que tenemos problemas, se va a estabilizar.")
+                flagAFD = 0
+                name = str(input("Ingrese el nombre del AFD: "))
+                for a in range(self.boveda):
+                    if name == self.boveda[a].getName():
+                       flagAFD+=1
+                if flagAFD!= 0:
+                    input("No puede haber dos AFD's con el mismo nombre, intentelo otra vez.")
                 else:
-                    self.clrsrc()
-                    input("Ingrese una opción valida")
+                    nuevoAFD = Aefede(name)
+                    self.boveda.append(nuevoAFD)
+                    self.IngresarEstados(name)
+                    self.IngresarAlfabeto(name)
+                    self.EstadoInicial(name)
+                    self.Aceptation(name)
+                    self.AddTransiciones(name)
+                self.clrsrc()
+            elif opcion == 2:
+                self.clrsrc()
+                self.cargaAFD()
+                self.clrsrc()
+            elif opcion == 3:
+                input("Evaluar cadena")                            
+            elif opcion == 4:
+                input("Guardar en archivo")
+            elif opcion == 5:
+                input("generar reporte")
+            elif opcion == 6:
+                input("generar gramatica")
+            elif opcion == 7:
+                salida1 = False                
+            else:
+                self.clrsrc()
+                input("Ingrese una opción valida")
 
     #pinche menu de gramaticas
     def SubGR(self):
         self.clrsrc()
-        name = str(input('Ingrese el nombre de la gramatica: '))
-        flag = 0
-        for i in range(len(self.boveda)):
-            if name == self.boveda[i].getName() and self.boveda[i].getTipo()=="Gramatica":
-                flag+=1
-        if flag!=0:
-            desicion = input("\nEl elemento ya existe, ¿desea modificarlo?: si/no\n")
-            if desicion == "si":
-                salidas = True
-                while salidas:
-                    self.clrsrc()
-                    print("********** Menú de Gramaticas **********\n")
-                    print('1- Ingresar no terminales')
-                    print('2- Ingresar terminales')
-                    print('3- No terminal inicial')
-                    print('4- Producciones')
-                    print('5- Gramática trasformada')
-                    print('6- Ayuda')
-                    print('7- Menu principal\n')
-                    opcion = int(input('Ingrese una opción: '))
-                    if opcion == 1:
-                        self.clrsrc()
-                        try:
-                            self.IngresarNT(name)                        
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 2:
-                        self.clrsrc()
-                        try:
-                            self.IngresarTerminales(name)                        
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 3:
-                        self.clrsrc()
-                        try:
-                            self.NoTerminalInicial(name)
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 4:
-                        self.clrsrc()
-                        try:
-                            self.Produu(name)
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 5:
-                        input("gramatica transformada")
-                    elif opcion == 6:
-                        self.clrsrc()
-                        self.Help()
-                    elif opcion == 7:
-                        salidas = False
-                        try:
-                            self.Menu()
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    else:
-                        self.clrsrc()
-                        input("Ingrese una opción valida")
-            elif desicion == "no":
-                    #input("Ingrese un nuevo nombre.")
-                try:
-                    self.Menu()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-        else:
-            nuevaGR= Gramatica(name)
-            nuevaGR.getTerminales().append("epsilon")
-            predetermindado = noTerminal("PR")
-            predetermindado.setEpsilon(True)
-            nuevaGR.setPrede(predetermindado)
-            self.boveda.append(nuevaGR)
-            salidas = True
-            while salidas:
+        salida2 = True
+        while salida2:            
+            print("********** Menú de Gramáticas **********\n")
+            print('1- Crear gramática')
+            print('2- Cargar archivo')
+            print('3- Evaluar cadena')
+            print('4- Eliminar recursividad por la izquierda')
+            print('5- Guardar gramática en archivo')
+            print('6- Generar reporte gramática regular')
+            print('7- Menu principal\n')
+            opcion = int(input('Ingrese una opción: '))
+            if opcion == 1:
+                #Crear gramatica
                 self.clrsrc()
-                print("********** Menú de Gramáticas **********\n")
-                print('1- Ingresar no Terminales')
-                print('2- Ingresar Terminales')
-                print('3- No terminal inicial')
-                print('4- Producciones')
-                print('5- Grámatica transformada')
-                print('6- Ayuda')
-                print('7- Menu principal\n')
-                opcion = int(input('Ingrese una opción: '))
-                if opcion == 1:
-                    self.clrsrc()
-                    try:
-                        self.IngresarNT(name)
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                elif opcion == 2:
-                    self.clrsrc()
-                    try:
-                        self.IngresarTerminales(name)
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                elif opcion == 3:
-                    self.clrsrc()
-                    try:
-                        self.NoTerminalInicial(name)
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                elif opcion == 4:
-                    self.clrsrc()
-                    try:
-                        self.Produu(name)
-                    except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                elif opcion == 5:
-                    input("Gramatica transformada")
-                elif opcion == 6:
-                    self.clrsrc()
-                    self.Help()
-                elif opcion == 7:
-                    salidas = False
-                    try:
-                        self.Menu()
-                    except:
-                        print("Parece que tenemos problemas, se va a estabilizar.")
+                flagGR = 0
+                name = str(input("Ingrese el nombre de la gramática: "))
+                for a in range(self.boveda):
+                    if name == self.boveda[a].getName():
+                       flagGR+=1
+                if flagGR!= 0:
+                    input("No puede haber dos gramáticas con el mismo nombre, intentelo otra vez.")
                 else:
-                    self.clrsrc()
-                    input("Ingrese una opción valida")            
+                    nuevaGR = Gramatica(name)
+                    self.boveda.append(nuevaGR)
+                    self.IngresarNT(name)
+                self.clrsrc()
+
+            elif opcion == 2:
+                input("Cargando archivo")
+            elif opcion == 3:
+                input("Evaluar cadena")                            
+            elif opcion == 4:
+                input("Guardar en archivo")
+            elif opcion == 5:
+                input("generar reporte")
+            elif opcion == 6:
+                input("generar gramatica")
+            elif opcion == 7:
+                salida2 = False                
+            else:
+                self.clrsrc()
+                input("Ingrese una opción valida")            
     
     ##pinche menu evaluar cadenas
     def SubEChain(self):
@@ -397,102 +198,7 @@ class Menu():
     
 
     
-    #Pinche menu cargar archivo
-    def SubUpFi(self):
-        salida = True
-        while salida:
-            self.clrsrc()
-            print("********** Menú Carga de Archivos **********\n")
-            print('1- Automata Finito Determinista')
-            print('2- Grámatica Regular')
-            print('3- Menú Principal\n')
-            opcion = int(input('Ingrese una opción: '))
-            if opcion == 1:
-                self.clrsrc()
-                try:
-                    self.cargaAFD()            
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            elif opcion ==2:
-                self.clrsrc()
-                try:
-                    self.cargarGR()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            elif opcion == 3:
-                salida = False
-                try:
-                    self.Menu()
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            else:
-                self.clrsrc()
-                input("Ingrese una opción valida")
-
-    #pinche menu guardar
-    def Save(self):
-        indice = input("Ingrese el nombre del AFD o la Gramatica a guardar: ")
-        flagAFD = 0
-        flagGR = 0
-        for a in range(len(self.boveda)):
-            if indice == self.boveda[a].getName() and self.boveda[a].getTipo()=="AFD":
-               flagAFD+=1
-            if indice == self.boveda[a].getName() and self.boveda[a].getTipo()=="Gramatica": 
-                flagGR+=1
-            #ninguno existe
-        if flagAFD==0 and flagGR == 0:
-            input("\nParece que el elemento que busca guardar no existe en memoria, Intentelo otra vez.")
-            #gramatica no existe 
-            #afd existe
-        elif flagAFD!=0 and flagGR == 0:
-            print("\nHemos comprobado que el elemento solo existe como AFD. Pero se puede generar la gramatica si es lo que quiere.\n")
-            tipo = input("Ingrese \"AFD\" para guardar el automata o \"GR\" para la gramatica: ")
-            name = input("Por ultimo ingrese el nombre con el que desea guardar el archivo : ")
-            if tipo=="AFD":
-                try:
-                    self.escribirAFD(name,indice)
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            elif tipo=="GR":
-                try:
-                    self.generarGR(indice)
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-                try:
-                    self.escribirGR(name,indice)
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            #gramatica existe
-            #afd no existe
-        elif flagAFD==0 and flagGR!=0:
-            print("\nHemos comprobado que el elemento solo existe como Gramatica. Pero se puede generar el AFD si es lo que quiere.\n")
-            tipo = input("Ingrese \"AFD\" para guardar el automata o \"GR\" para la gramatica: ")
-            name = input("Por ultimo ingrese el nombre con el que desea guardar el archivo : ")
-            if tipo=="AFD":
-                try:
-                    self.generarAFD(indice)
-                    self.escribirAFD(name,indice)
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            elif tipo=="GR":
-                try:
-                    self.escribirGR(name,indice)
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-        elif flagAFD!=0 and flagGR!=0:
-            print("\nHemos comprobado que el elemento existe como Gramatica y como AFD.\n")
-            tipo = input("Ingrese \"AFD\" para guardar el automata o \"GR\" para la gramatica: ")
-            name = input("Por ultimo ingrese el nombre con el que desea guardar el archivo : ")
-            if tipo == "AFD":
-                try:
-                    self.escribirAFD(name,indice)
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
-            elif tipo == "GR":
-                try:
-                    self.escribirGR(name,indice)
-                except:
-                    print("Parece que tenemos problemas, se va a estabilizar.")
+    #Pinche menu cargar archivo    
 
     def generarAFD(self,nome):
         for a in range(len(self.boveda)):
@@ -540,7 +246,8 @@ class Menu():
                 self.boveda.append(nuevaGR)
 
     def escribirAFD(self,nombre, nome):
-        archivo = open("C:\\Users\\almxo\\Desktop\\"+nombre+".afd", 'w')
+        path_desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')        
+        archivo = open(path_desktop+"\\"+nombre+".afd", 'w')
         #for para recorrer lista general
         
         for i in range(len(self.boveda)):
@@ -567,7 +274,8 @@ class Menu():
         archivo.close()
 
     def escribirGR(self,nombre, nome):
-        archivo = open("C:\\Users\\almxo\\Desktop\\"+nombre+".grm", 'w')
+        path_desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+        archivo = open(path_desktop+"\\"+nombre+".gre", 'w')
         for i in range(len(self.boveda)):
             if self.boveda[i].getName() == nome and self.boveda[i].getTipo()=="Gramatica":
                 for j in range(len(self.boveda[i].getProducciones())):                    
@@ -856,62 +564,21 @@ class Menu():
 
 #ddddddddddddddddddddddddddddd
 #222222222222222222222222222222
-#fin menu culero de reportes
-    
-# funciones chidas
-    def probando(self):
-        for i in range(len(self.boveda)):
-            if self.boveda[i].getTipo() == "Gramatica":
-                print(self.boveda[i].getName())
-                for a in range(len(self.boveda[i].getProducciones())):
-                    print(self.boveda[i].getProducciones()[a].gettInicial()+" > "+self.boveda[i].getProducciones()[a].getTerminal()+" "+self.boveda[i].getProducciones()[a].gettFinal())
-                print("fin")
-
-        for a in range(len(self.boveda)):
-            if self.boveda[a].getTipo() == "AFD":
-                print(self.boveda[a].getName())
-                print("estados:")
-                for p in range(len(self.boveda[a].getEstados())):
-                    print(self.boveda[a].getEstados()[p].getNameE()+"| Aceptación: "+self.boveda[a].getEstados()[p].getAcepta())
-                print("ALFABETO")
-                for p in range(len(self.boveda[a].getAlfabeto())):
-                    print(self.boveda[a].getAlfabeto()[p])
-                for q in range(len(self.boveda[a].getTransiciones())):
-                    print(self.boveda[a].getTransiciones()[q].geteInicial()+","+self.boveda[a].getTransiciones()[q].geteFinal()+";"+self.boveda[a].getTransiciones()[q].getEntrada())
-        #print("afd: " + self.boveda[1].getName())
-        #print("trancy inicial: "+ self.boveda[1].getTransiciones()[0].geteInicial().getNameE())
-        #print("trancy final: "+ self.boveda[1].getTransiciones()[0].geteFinal().getNameE())
-        #print("trancy terminal: "+ self.boveda[1].getTransiciones()[0].getEntrada())
-        #print("estado 1: "+ self.boveda[1].getEstados()[0].getNameE()+" Aceptación: "+self.boveda[1].getEstados()[0].getAcepta())
-        #print("estado 2: "+ self.boveda[1].getEstados()[1].getNameE()+" Aceptación: "+self.boveda[1].getEstados()[1].getAcepta())
-        #print("estado 3: "+ self.boveda[1].getEstados()[2].getNameE()+" Aceptación: "+self.boveda[1].getEstados()[2].getAcepta())
-        #print("estado 4: "+ self.boveda[1].getEstados()[3].getNameE()+" Aceptación: "+self.boveda[1].getEstados()[3].getAcepta())
-
-        #print("\nafd: " + self.boveda[1].getName())
-        #print("elemento 1: "+ self.boveda[1].getAlfabeto()[0])
-        #print("elemento 2: "+ self.boveda[1].getAlfabeto()[1])
-        #print("elemento 3: "+ self.boveda[1].getAlfabeto()[2])
-        #print("elemento 4: "+ self.boveda[1].getAlfabeto()[3])
-        #for i in range(len(self.boveda[1].getEstados())):
-            #print(self.boveda[1].getEstados()[i].getNameE())
-            #print(estesi[1].getEstados()[i].getNameE())
-        input("perate")        
-            
+#fin menu culero de reportes                    
     def clrsrc(self):
         os.system("cls")
 
-    def Help(self):
-        print("Lenguajes Formales de Programación \nAuxiliar: Luis Yela \n-> 9 <-")
-        input("Pulsa enter para continuar: ")
+    def AcerdaDe(self):
+        print("Lenguajes Formales de Programación \nAuxiliar: Danilo Urias \nSección: B")
+        input("Pulsa ENTER para continuar")
     
     #santo vergueo para un pinche estado
     def IngresarEstados(self, nome):
         print("AFD llamado: "+nome+"\nEscriba >>salir<< para dejar de ingresar estados")
         salida = True
         while salida:   
-            dato = str(input("\nIngrese un estado para el AFD: "))
-            estado = dato.upper()
-            if dato != "salir":                
+            estado = str(input("\nIngrese un estado para el AFD: "))            
+            if estado != "salir":                
                 self.CrearEstados(nome,estado)
             else:
                 salida = False
@@ -923,11 +590,11 @@ class Menu():
                     #print("estamos verificando afds")
             if nome == self.boveda[a].getName() and self.boveda[a].getTipo()== "AFD":
                         #print("encontramos el afd")
-                if self.boveda[a].getEstados():    
-                    flag = 0                                                                                
+                if self.boveda[a].getEstados():
+                    flag = 0
                     for i in range(len(self.boveda[a].getEstados())):
                                 #print("verificando estados  del afd")
-                        if estado == self.boveda[a].getEstados()[i].getNameE():                                    
+                        if estado == self.boveda[a].getEstados()[i].getNameE():
                             flag+=1
 
                     if flag == 0:
@@ -935,8 +602,7 @@ class Menu():
                     else:
                         print("El estado ya existe, no puede haber dos estados con el mismo nombre.")
                                 #estesi[a].getEstados().append(state)
-                else:
-                    state.setInicio(True)
+                else:                    
                     self.boveda[a].getEstados().append(state)
                             #estesi[a].getEstados().append(state)
     #vergueo de alfabeto
@@ -953,23 +619,36 @@ class Menu():
 
     def CrearAlfabeto(self, nome, alfa):
         for a in range(len(self.boveda)):
-            if nome == self.boveda[a].getName() and self.boveda[a].getTipo()== "AFD":                        
-                if self.boveda[a].getAlfabeto():    
-                    flag = 0                                                                                
-                    for i in range(len(self.boveda[a].getAlfabeto())):
-                        if alfa == self.boveda[a].getAlfabeto()[i]:                                    
-                            flag+=1
+            if nome == self.boveda[a].getName() and self.boveda[a].getTipo()== "AFD":
+                #viendo si no ingresamos un alfabeto que ya está como estado
+                bandera = 0
+                for k in range(len(self.boveda[a].getEstados())):
+                    if alfa != self.boveda[a].getEstados[k].getNameE():
+                        bandera+=0
+                if bandera==0:
+                    print("podemos ingresar el alfabeto")
+                    if self.boveda[a].getAlfabeto():    
+                        flag = 0                                                                                
+                        for i in range(len(self.boveda[a].getAlfabeto())):
+                            if alfa == self.boveda[a].getAlfabeto()[i]:                                    
+                                flag+=1
 
-                    if flag == 0:
-                        self.boveda[a].getAlfabeto().append(alfa)
+                        if flag == 0:
+                            self.boveda[a].getAlfabeto().append(alfa)
+                        else:
+                            print("El caracter ya existe en el alfabeto.")
                     else:
-                        print("El elemento ya existe en el alfabeto.")
+                        self.boveda[a].getAlfabeto().append(alfa)
                 else:
-                    self.boveda[a].getAlfabeto().append(alfa)
+                    input("El caracter que se quiere agregar como alfabeto ya está como un estado.\nNo se puede realizar la operacion.")
+                
     #vergueo del estado inicial
     def EstadoInicial(self, nome):
         print("AFD llamado: "+nome+"\n")
         dato = str(input("Ingrese un estado existente para declararlo como estado inicial del AFD: "))
+        self.AsignarEstadoInicial(nome,dato)
+        
+    def AsignarEstadoInicial(self, nome, dato):
         for i in range(len(self.boveda)):
             if nome == self.boveda[i].getName() and self.boveda[i].getTipo()== "AFD":
                 if self.boveda[i].getEstados():                    
@@ -1001,7 +680,7 @@ class Menu():
                 if self.boveda[i].getEstados():                                                
                     for b in range(len(self.boveda[i].getEstados())):
                         if self.boveda[i].getEstados()[b].getNameE()==dato:                                                                
-                            self.boveda[i].getEstados()[b].setAcepta(True)                                                        
+                            self.boveda[i].getEstados()[b].setAcepta(True)                         
                 else:
                     print("El AFD al que intenta asignar estados de aceptacion no cuenta con ningun estado todavia.")
 
@@ -1012,52 +691,28 @@ class Menu():
                     for b in range(len(self.boveda[i].getEstados())):
                         if self.boveda[i].getEstados()[b].getNameE()==dato:                                                                
                             self.boveda[i].getEstados()[b].setAcepta(False)                                                        
-                
-    #otro vergueo mamalon con las transiciones
-    def Transicion(self, nome):
-        
-        salida = True
-        while salida:
-            self.clrsrc()
-            print("AFD llamado: "+nome+"\nEliga el modo de ingreso de las transiciones.")
-            print("1- Modo 1")
-            print("2- Modo 2")
-            print("3- Volver al menu de AFDs\n")
-            opcion = int(input("Ingrese una opcion: "))
-            if opcion==1:
-                self.clrsrc()
-                #try:
-                self.Modo1(nome)
-                #except:
-                    #print("Parece que tenemos problemas, se va a estabilizar.")
-            elif opcion == 2:
-                self.clrsrc()
-                self.Modo2(nome)
-            elif opcion == 3:
-                salida = False
-                self.Menu()
-            else:
-                self.clrsrc()
-                print("Ingrese una opción valida")
-    
-    #modos de ingreso de las transiciones
-    def Modo1(self, nome):
-        self.clrsrc()
+
+    #otro vergueo mamalon con las transiciones        
+    #ingreso de las transiciones
+    def AddTransiciones(self, nome):        
         print("AFD llamado: "+nome+"\nIngresando transiciones. Escriba >>salir<< para detenerse.")
-        print("Ejemplo de la sintaxis de ingreso: \"A,B;0\"")
+        print("Ejemplo de la sintaxis de ingreso: \"A,0;B\"")
         salida = True
         while salida:        
             trans = input("\nIngrese una transición: ")
             if trans != "salir":
                 #try:
-                self.TransicionesModo1(nome,trans)                
+                self.Transiciones(nome,trans)                
                 #except:
                     #print("Parece que tenemos problemas, se va a estabilizar.")
             else:
                 salida = False
 
-    def TransicionesModo1(self, nome, trans):
+    def Transiciones(self, nome, trans):
         frag = trans.split(';')
+                #  0  , 1
+        #Frag = ["A,1","B"]
+        #estados = ["A","1"]
         estados = frag[0].split(',')
         for i in range(len(self.boveda)):
             if nome == self.boveda[i].getName() and self.boveda[i].getTipo()=="AFD":
@@ -1067,17 +722,19 @@ class Menu():
                 banderita=0
                 inicial = None
                 final = None
+                #Validando terminal involucrado en la transición.
                 for c in range(len(self.boveda[i].getAlfabeto())):
-                    if frag[1] == self.boveda[i].getAlfabeto()[c]:
+                    if estados[1] == self.boveda[i].getAlfabeto()[c]:
                         flag3+=1
                                 #input("terminal")
 
+                #validando estado inicial y que no haya mas de una transición con la misma terminal
                 for a in range(len(self.boveda[i].getEstados())):
                     if estados[0] == self.boveda[i].getEstados()[a].getNameE():
                         flag1+=1
-                        inicial = self.boveda[i].getEstados()[a].getNameE()
+                        inicial = self.boveda[i].getEstados()[a]
                         if self.boveda[i].getEstados()[a].getSalidas():
-                                    
+
                             for k in range(len(self.boveda[i].getEstados()[a].getSalidas())):
                                 if frag[1]==self.boveda[i].getEstados()[a].getSalidas()[k]:
                                     banderita+=1                                        
@@ -1086,12 +743,12 @@ class Menu():
                         else:
                             self.boveda[i].getEstados()[a].getSalidas().append(frag[1])
                                 #input("inicio")
-
+                #validando estado final
                 for b in range(len(self.boveda[i].getEstados())):
-                    if estados[1]== self.boveda[i].getEstados()[b].getNameE():
+                    if frag[1]== self.boveda[i].getEstados()[b].getNameE():
                         flag2+=1
-                        final = self.boveda[i].getEstados()[b].getNameE()
-                                #input("final")                       
+                        final = self.boveda[i].getEstados()[b]
+                                #input("final")
 
                 if flag1!=0 and flag2!=0 and flag3!=0:
                     if banderita==0:                            
@@ -1101,35 +758,6 @@ class Menu():
                         print("Ésta acción no se completó.\nUsted está tratando de crear un Automata Finito NO Determinista o Está ingresando una transición que ya existe.")
                 else:
                     print("Almenos un estado que está involucrado en ésta transición no existe en la lista de estados de este AFD.\nO bien el terminal involucrado no existe en el alfabeto del AFD")
-
-    def Modo2(self, nome):
-        self.clrsrc()
-        print("AFD llamado: "+nome+"\n")
-        entrada1 =str(input("Ingrese el alfabeto separados por comas: "))
-        entrada2 = str(input("Ingrese los estados iniciales separados por comas: "))
-        print("\nEjemplo de sintaxis: A,C;A,C;B,D")
-        entrada3 = str(input("Ingrese los estados finales:"))
-        alfabeto= entrada1.split(',')
-        eIni= entrada2.split(',')
-        eFini = entrada3.split(';')
-        entraModo1=[]
-        if eIni.__len__()==eFini.__len__():
-            for a in range(len(eIni)):
-                vamo = eFini[a].split(',')
-                if vamo[0]!="-":
-                    transmetro = eIni[a]+","+vamo[0]+";"+alfabeto[0] 
-                    entraModo1.append(transmetro)
-
-            for b in range(len(eIni)):
-                vamo = eFini[b].split(',')
-                if vamo[1]!="-":
-                    transmetro = eIni[b]+","+vamo[1]+";"+alfabeto[1] 
-                    entraModo1.append(transmetro)
-
-        for i in range(len(entraModo1)):
-            trans = str(entraModo1[i])
-            self.TransicionesModo1(nome, trans)
-
 ##gramaticas
 ##Gramaticas
 ##Gramaticas
@@ -1138,17 +766,16 @@ class Menu():
         print("Gramática llamada: "+nome+"\nEscriba >>salir<< para dejar de ingresar No Terminales")
         salida = True
         while salida:   
-            dato = str(input("\nIngrese un No terminal para la Gramática: "))
-            NT = dato.upper()
-            if dato != "salir":                
+            NT = str(input("\nIngrese un No terminal para la Gramática: "))            
+            if NT != "salir":                
                 self.CrearNoTerminal(nome,NT)
             else:
-                salida = False
+                salida = False                
 
     def CrearNoTerminal(self,nome,NT):
-        terminator = noTerminal(NT)                
+        terminator = noTerminal(NT)
         for a in range(len(self.boveda)):                    
-            if nome == self.boveda[a].getName() and self.boveda[a].getTipo()== "Gramatica":                        
+            if nome == self.boveda[a].getName() and self.boveda[a].getTipo() == "Gramatica":                        
                 if self.boveda[a].getNoTerms():    
                     flag = 0                                                                                
                     for i in range(len(self.boveda[a].getNoTerms())):                                
@@ -1160,8 +787,7 @@ class Menu():
                                 #print("agregado")
                     else:
                         print("El No Terminal ya existe, no puede haber dos No Terminales con el mismo nombre.")                                
-                else:
-                    terminator.setInicio(True)
+                else:                    
                     self.boveda[a].getNoTerms().append(terminator)
                             #print("agredado 1")
     #copia del vergueo de alfabeto modificado para terminales
@@ -1177,24 +803,37 @@ class Menu():
                 salida = False
     def CrearTerminales(self,nome,zona4):
         for a in range(len(self.boveda)):
-            if nome == self.boveda[a].getName() and self.boveda[a].getTipo()== "Gramatica":                        
-                if self.boveda[a].getTerminales():    
-                    flag = 0                                                                                
-                    for i in range(len(self.boveda[a].getTerminales())):
-                        if zona4 == self.boveda[a].getTerminales()[i]:                                    
-                            flag+=1
+            if nome == self.boveda[a].getName() and self.boveda[a].getTipo()== "Gramatica":
+                #viendo si podemos agregar el terminal
+                bandera = 0
+                for k in range(len(self.boveda[a].getNoTerms())):
+                    if zona4 == self.boveda[a].getNoTerms()[k].getName():
+                        bandera+=0
+                if bandera == 0:
+                    #podemos agregar la terminal
+                    if self.boveda[a].getTerminales():    
+                        flag = 0                                                                                
+                        for i in range(len(self.boveda[a].getTerminales())):
+                            if zona4 == self.boveda[a].getTerminales()[i]:                                    
+                                flag+=1
 
-                    if flag == 0:
-                        self.boveda[a].getTerminales().append(zona4)
+                        if flag == 0:
+                            self.boveda[a].getTerminales().append(zona4)
+                        else:
+                            print("El Terminal ya existe para la Gramatica.")
                     else:
-                        print("El Terminal ya existe para la Gramatica.")
+                        self.boveda[a].getTerminales().append(zona4)                    
+                    
                 else:
-                    self.boveda[a].getTerminales().append(zona4)
+                    input("El terminal que se quiere agregar a la lista ya está como un No Terminal.\nNo se puede realizar la operacion.")                    
     
     #Copia del vergueo del estado inicial para gramaticas
     def NoTerminalInicial(self, nome):
         print("Gramatica llamada: "+nome+"\n")
         dato = str(input("Ingrese un No Terminal existente para declararlo como inicial: "))
+        self.AsignarNoTerminalInicial(nome,dato)
+        
+    def AsignarNoTerminalInicial(self,nome,dato):
         for i in range(len(self.boveda)):
             if nome == self.boveda[i].getName() and self.boveda[i].getTipo()== "Gramatica":
                 if self.boveda[i].getNoTerms():                                        
@@ -1242,13 +881,13 @@ class Menu():
                         for a in range(len(self.boveda[i].getNoTerms())):
                             if NT1[0]== self.boveda[i].getNoTerms()[a].getName():
                                 flag1+=1
-                                inicial = self.boveda[i].getNoTerms()[a].getName()
+                                inicial = self.boveda[i].getNoTerms()[a]
 #                                        input("inicio")
 
                         for b in range(len(self.boveda[i].getNoTerms())):
                             if NT2[1]== self.boveda[i].getNoTerms()[b].getName():
                                 flag2+=1
-                                final = self.boveda[i].getNoTerms()[b].getName()
+                                final = self.boveda[i].getNoTerms()[b]
  #                                       input("final")
 
                         for c in range(len(self.boveda[i].getTerminales())):
@@ -1271,7 +910,8 @@ class Menu():
                         for a in range(len(self.boveda[i].getNoTerms())):
                             if NT1[0]== self.boveda[i].getNoTerms()[a].getName():
                                 flag1+=1
-                                inicial = self.boveda[i].getNoTerms()[a].getName()
+                                inicial = self.boveda[i].getNoTerms()[a]
+
                                 if self.boveda[i].getNoTerms()[a].getSalidas():                                    
                                     for k in range(len(self.boveda[i].getNoTerms()[a].getSalidas())):
                                         if NT2[1] ==self.boveda[i].getNoTerms()[a].getSalidas()[k]:
@@ -1285,7 +925,7 @@ class Menu():
                         for b in range(len(self.boveda[i].getNoTerms())):
                             if NT2[2]== self.boveda[i].getNoTerms()[b].getName():
                                 flag2+=1
-                                final = self.boveda[i].getNoTerms()[b].getName()
+                                final = self.boveda[i].getNoTerms()[b]
                                         #input("final")                                
 
                         if flag1!=0 and flag2!=0 and flag3!=0:
@@ -1298,7 +938,7 @@ class Menu():
                             print("Almenos un No terminal que está involucrado en ésta produccion no existe para la Gramatica.\nO bien el terminal involucrado no existe en la lista de terminales.")                            
                 elif len(NT2)==2:
    #                         print("viene epsilon o terminal")
-                    if NT2[1]=="epsilon":
+                    if NT2[1]=="$":
     #                            print("terminal de aceptacion")
                         badera = 0
                         for a in range(len(self.boveda[i].getNoTerms())):
@@ -1371,94 +1011,66 @@ class Menu():
                             print("El No Terminal y/o el Terminal involucrado en ésta producción no existe para la gramatica.")
 
 ##cargar archivos
-##menu, 
+##menu
     def cargaAFD(self):
         nombre = input("Ingrese el nombre del archivo para generar el AFD: ")
-        name = nombre.split('.')
-        flag = 0
-        for i in range(len(self.boveda)):
-            if name[0] == self.boveda[i].getName():
-                flag+=1
-        if flag ==0:
-            nuevoAFD = Aefede(name[0])
-            predetermindado = Estado("PR")
-            predetermindado.setAcepta(True)
-            nuevoAFD.setPrede(predetermindado)
-            self.boveda.append(nuevoAFD)            
-            archivo = open(nombre,'r')
-            tela = archivo.read()
-            archivo.close()
-            olvido=tela.split('\n')
-            #input("HAGA CASO OMISO A LOS SIGUIENTES MENSAJES, EL AFD SE CREARÁ CON EXITO.")
-            for a in range(len(olvido)):
-                estados = olvido[a].split(';')
-                atributo1=estados[0].split(',')
-                atributo2=estados[1].split(',')
-                self.CrearEstados(name[0],atributo1[0])
-                self.CrearEstados(name[0],atributo1[1])
-                self.CrearAlfabeto(name[0],atributo1[2])
+        archivoAFDS = open(nombre,'r') 
+        Datos = archivoAFDS.read()
+        archivoAFDS.close()
+        divisonAFDS = Datos.split('%')
+        try:
+            divisonAFDS.remove('')
+        except:
+            pass
+        listaAutomatas = []
+        #ciclo for para extraer los datos de cada automata, 
+        # ponerlos en una lista de listas y eliminar elementos en blanco
+        for i in range(len(divisonAFDS)):
+            automata = divisonAFDS[i].split('\n')
+            try:
+                automata.remove('')
+                automata.remove('')
+            except:
+                pass
+            listaAutomatas.append(automata)
+        #Ciclo for para empezar a crear objetos Aefede
+        for a in range(len(listaAutomatas)):
+            #verificando si el automata que se quiere agregar ya existe
+            flag = 0
+            for a in range(len(self.boveda)):
+                if listaAutomatas[i][0] == self.boveda[a].getName():
+                    flag +=1
+            if flag == 0: #el automata no existe y lo agregamos
+                #tratamos con el nombre
+                name = str(listaAutomatas[i][0])
+                aefede = Aefede(name)
+                self.boveda.append(aefede)
+                #tratamos con los estados
+                estrato = listaAutomatas[i][1].split(',')
+                for j in range(len(estrato)):
+                    self.CrearEstados(name,str(estrato[j]))
+                #tratamos con el alfabeto
+                alpha = listaAutomatas[i][2].split(',')
+                for k in range(len(alpha)):
+                    self.CrearAlfabeto(name,str(alpha[k]))
+                #tratamos con el estado inicial
+                self.AsignarEstadoInicial(name,str(listaAutomatas[i][3]))
+                #tratamos con los estados de aceptacion
+                try:
+                    aceptaciones = listaAutomatas[i][4].split(',')
+                    aceptaciones.remove('')
+                except:
+                    pass
+                for l in range(len(aceptaciones)):
+                    self.Acetona(name,str(aceptaciones[l]))
+                #Tratamos con las transiciones
+                for m in range(len(listaAutomatas[i])):
+                    if m >=5:
+                        self.Transiciones(name,str(listaAutomatas[i][m]))
+                input("AFD cargado correctamente.\nPresione ENTER para volver al menú principal.")
 
-                if atributo2[0]=="true":
-                    self.Acetona(name[0],atributo1[0])
-                elif atributo2[0]=="false":
-                    self.AcetonaInverso(name[0],atributo1[0])
-
-                if atributo2[1]=="true":
-                    self.Acetona(name[0],atributo1[1])
-                elif atributo2[1]=="false":
-                    self.AcetonaInverso(name[0],atributo1[1])
-
-            for f in range(len(olvido)):
-                estados = olvido[f].split(';')
-                atributo1=estados[0].split(',')
-                atributo2=estados[1].split(',')
-                trans= atributo1[0]+","+atributo1[1]+";"+atributo1[2]                
-                self.TransicionesModo1(name[0],trans)
-            
-
-            
-        else:
-            input("El elemento ya existe en memoria, pueda que haya sido cargado previamente.\nO bien ser creado desde el menu de creación.")
+            else:
+                input("El AFD que se quiere agregar ya existe en memoria")
     
     def cargarGR(self):
-        nombre = input("Ingrese el nombre del archivo para generar la Gramatica: ")
-        name = nombre.split('.')
-        flag = 0
-        for i in range(len(self.boveda)):
-            if name[0] == self.boveda[i].getName():
-                flag+=1
-        if flag ==0:
-            nuevoGR = Gramatica(name[0])
-            nuevoGR.getTerminales().append("epsilon")
-            predetermindado = noTerminal("PR")
-            predetermindado.setEpsilon(True)
-            nuevoGR.setPrede(predetermindado)
-            self.boveda.append(nuevoGR)            
-            archivo = open(nombre, 'r')
-            tela = archivo.read()
-            archivo.close()
-            olvido=tela.split('\n')
-            #input("HAGA CASO OMISO A LOS SIGUIENTES MENSAJES, EL AFD SE CREARÁ CON EXITO.")
-            for a in range(len(olvido)):
-                noter = olvido[a].split('>')
-                parte1=noter[0].split(' ')
-                parte2=noter[1].split(' ')
-                self.CrearNoTerminal(name[0],parte1[0])
-                if len(parte2)==3:
-                    if parte2[1].isupper()==True:
-                        nuevoGR.setIzquierda(True)
-                        self.CrearNoTerminal(name[0],parte2[1])
-                        self.CrearTerminales(name[0],parte2[2])
-                    else:
-                        self.CrearNoTerminal(name[0],parte2[2])
-                        self.CrearTerminales(name[0],parte2[1])
-
-                elif len(parte2)==2:
-                    if parte2[1]!="epsilon":
-                        self.CrearTerminales(name[0],parte2[1])
-            
-            for z in range(len(olvido)):
-                self.CrearProducciones(name[0],olvido[z])
-            
-        else:
-            input("El elemento ya existe en memoria, pueda que haya sido cargado previamente.\nO bien ser creado desde el menu de creación.")
+        print()

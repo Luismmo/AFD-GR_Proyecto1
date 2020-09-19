@@ -1,3 +1,11 @@
+import os
+from io import open 
+import codecs
+a = "abcdef"
+split = a.split('%')
+print(a)
+print(split)
+#print(split[1])
 #pruebas chiquitas para solucionar vergueos grandes
 #primer vergueo
 """ st = str(input("prueba: "))
@@ -52,14 +60,35 @@ print(c[1].islower())
 print(c[2].isupper()) """
 
 #cuarta duda
-""" nombre = input("Ingrese el nombre del archivo para generar el AFD: ")
+nombre = input("Ingrese el nombre del archivo para generar el AFD: ")
 name = nombre.split('.')
 print(name[0])
 archivo = open(nombre, 'r')
 tela = archivo.read()
 archivo.close()
-input(tela) 
- """
+division = tela.split('%')
+division.remove('')
+print(division)
+print('**************************')
+automataN=[]
+for a in range(len(division)):
+    automata=division[a].split('\n')
+    try:
+        automata.remove('')
+        automata.remove('')
+    except:
+        print('')
+    automataN.append(automata)
+#automataN[0].remove('')
+print(len(automataN))
+print(len(automataN[0]))
+print(len(automataN[1]))
+print(len(automataN[2]))
+print(automataN[0])
+print(automataN[0][12])
+print(automataN[1])
+input(automataN[2])
+
 #quinta
 #a=input("aaa: ")
 #print(a.islower())
@@ -110,7 +139,13 @@ archivo = open("C:\\Users\\almxo\\Desktop\\filename.txt", "w")
 archivo.write("Primera línea\n")
 archivo.write("Segunda línea")
 archivo.close()"""
-a=["a","b"]
-b=["c","d","e"]
-if a.__len__()==b.__len__():
-    print("misma longitud")
+#a=["a","b"]
+#b=["c","d","e"]
+#if a.__len__()==b.__len__():
+#    print("misma longitud")
+
+#obtener path escritorio 
+#import os
+
+#path_desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+#print("Dirección: "+path_desktop)

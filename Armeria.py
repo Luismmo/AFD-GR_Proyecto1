@@ -1,7 +1,7 @@
 import codecs
 #fabrica de aefedes
 class Aefede(object):
-    def __init__(self, name):
+    def __init__(self, name):        
         self.nombre = name
         self.estados= list()
         self.alfabeto = []
