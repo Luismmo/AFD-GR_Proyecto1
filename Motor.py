@@ -9,7 +9,7 @@ import subprocess
 class Menu():
     def __init__(self):
         self.boveda = []
-        valor ="teniaquehacerlo"
+        valor ="  "
         teniaque = Aefede(valor)
         self.boveda.append(teniaque)        
         #self.GRS = []
@@ -150,7 +150,9 @@ class Menu():
                 self.escribirGR()
                 self.clrsrc()
             elif opcion == 5:
-                input("generar reporte")
+                self.clrsrc()
+                self.escribirGR()
+                self.clrsrc()
             elif opcion == 6:
                 input("generar gramatica")
             elif opcion == 7:
@@ -211,10 +213,7 @@ class Menu():
     def generarAFD(self,nome):
         for a in range(len(self.boveda)):
             if self.boveda[a].getName()==nome and self.boveda[a].getTipo()=="Gramatica":
-                nuevoAFD = Aefede(nome)
-                predetermindado = Estado("PR")
-                predetermindado.setAcepta(True)
-                nuevoAFD.setPrede(predetermindado)
+                nuevoAFD = Aefede(nome)                
                 #conviertiendo no terminales a estados
                 for i in range(len(self.boveda[a].getNoTerms())):
                     nuevoEstado=Estado(self.boveda[a].getNoTerms()[i].getName())
@@ -225,19 +224,28 @@ class Menu():
                 #terminales pasan a ser el alfabeto
                 nuevoAFD.setAlfabeto(self.boveda[a].getTerminales())
                 #producciones a transiciones :"v
-                for j in range(len(self.boveda[a].getProducciones())):
-                    if self.boveda[a].getProducciones()[j].getTerminal()!="epsilon":
-                        nuevoTrance= Transicion(self.boveda[a].getProducciones()[j].gettInicial(),self.boveda[a].getProducciones()[j].gettFinal(),self.boveda[a].getProducciones()[j].getTerminal())
-                        nuevoAFD.getTransiciones().append(nuevoTrance)
+                for j in range(len(self.boveda[a].getProducciones())):                    
+                    #inicial
+                    estadoInicial = Estado(self.boveda[a].getProducciones()[j].gettInicial().getName())
+                    estadoInicial.setAcepta(self.boveda[a].getProducciones()[j].gettInicial().getEpsilon())
+                    estadoInicial.setInicio(self.boveda[a].getProducciones()[j].gettInicial().getInicio())
+                    estadoInicial.setSalidas(self.boveda[a].getProducciones()[j].gettInicial().getSalidas())
+                    #final
+                    estadoFinal = Estado(self.boveda[a].getProducciones()[j].gettFinal().getName())
+                    estadoFinal.setAcepta(self.boveda[a].getProducciones()[j].gettFinal().getEpsilon())
+                    estadoFinal.setInicio(self.boveda[a].getProducciones()[j].gettFinal().getInicio())
+                    estadoFinal.setSalidas(self.boveda[a].getProducciones()[j].gettFinal().getSalidas())
+                    inicio2 = self.boveda[a].getProducciones()[j].get
+                    #entrada
+                    entrada = self.boveda[a].getProducciones()[j].getTerminal()
+                    nuevaTran = Transicion(estadoInicial,estadoFinal,entrada)
+                    nuevoAFD.getTransiciones().append(nuevaTran)
                 self.boveda.append(nuevoAFD)
     
     def generarGR(self,nome):
         for a in range(len(self.boveda)):
             if self.boveda[a].getName()==nome and self.boveda[a].getTipo()=="AFD":
-                nuevaGR= Gramatica(nome)
-                predetermindado = noTerminal("PR")
-                predetermindado.setEpsilon(True)
-                nuevaGR.setPrede(predetermindado)
+                nuevaGR= Gramatica(nome)                
                 #conviertiendo estados a no terminales
                 for i in range(len(self.boveda[a].getEstados())):
                     nuevoNT=noTerminal(self.boveda[a].getEstados()[i].getNameE())
@@ -247,10 +255,22 @@ class Menu():
                     nuevaGR.getNoTerms().append(nuevoNT)
                 #alfabeto pasa a ser terminales
                 nuevaGR.setTerminales(self.boveda[a].getAlfabeto())
-                #transiciones a producciones; lo vi dificl pero solo era ajustar unas ondas
-                for j in range(len(self.boveda[a].getTransiciones())):
-                    nuevaProd = Produccion(self.boveda[a].getTransiciones()[j].geteInicial(),self.boveda[a].getTransiciones()[j].geteFinal(),self.boveda[a].getTransiciones()[j].getEntrada())
-                    nuevaGR.getProducciones().append(nuevaProd)
+                #transiciones a producciones; lo vi dificl pero solo era ajustar unas ondas                
+                for j in range(len(self.boveda[a].getTransiciones())):                    
+                    #inicial
+                    NTInicial = noTerminal(self.boveda[a].getTransiciones()[j].geteInicial().getName())
+                    NTInicial.setEpsilon(self.boveda[a].getTransiciones()[j].geteInicial().getAcepta())
+                    NTInicial.setInicio(self.boveda[a].getTransiciones()[j].geteInicial().getInicio())
+                    NTInicial.setSalidas(self.boveda[a].getTransiciones()[j].geteInicial().getSalidas())
+                    #final
+                    NTFinal = noTerminal(self.boveda[a].getTransiciones()[j].geteFinal().getName())
+                    NTFinal.setAcepta(self.boveda[a].getTransiciones()[j].geteFinal().getAcepta())
+                    NTFinal.setInicio(self.boveda[a].getTransiciones()[j].geteFinal().getInicio())
+                    NTFinal.setSalidas(self.boveda[a].getTransiciones()[j].geteFinal().getSalidas())                    
+                    #entrada
+                    entrada = self.boveda[a].getTransiciones()[j].getEntrada()
+                    nuevaProdu = Produccion(NTInicial,NTFinal,entrada)
+                    nuevaGR.getProducciones().append(nuevaProdu)
                 self.boveda.append(nuevaGR)
 
     def escribirAFD(self):
@@ -290,17 +310,20 @@ class Menu():
                         estadoInicial=self.boveda[i].getEstados()[o].getNameE()
                 archivo.writelines(estadoInicial+"\n")
                 #agregando estados de aceptación
+                flag=0
                 for p in range(len(self.boveda[i].getEstados())):
                     if self.boveda[i].getEstados()[p].getAcepta()==True:
-                        if p>=1:
+                        if flag>=1:
                             estadosAceptacion += ","+self.boveda[i].getEstados()[p].getNameE()
                         else:
                             estadosAceptacion = self.boveda[i].getEstados()[p].getNameE()
+                        flag+=1
                 archivo.writelines(estadosAceptacion+"\n")
                 #agregando transiciones                
                 for q in range(len(self.boveda[i].getTransiciones())):                    
                     archivo.writelines(self.boveda[i].getTransiciones()[q].geteInicial().getNameE()+","+self.boveda[i].getTransiciones()[q].getEntrada()+";"+self.boveda[i].getTransiciones()[q].geteFinal().getNameE()+"\n")                    
                 archivo.writelines("%")
+                input("Archivo generado exitosamente.\nRevise el escritorio de su computadora")            
         archivo.close()
 
     def escribirGR(self):
@@ -313,8 +336,7 @@ class Menu():
         archivo = open(path_desktop+"\\"+nombre+".gre", 'w')
         NoTerms=""
         Termis=""
-        NTInicial=""
-        estadosAceptacion=""
+        NTInicial=""        
         #for para recorrer lista general        
         for i in range(len(self.boveda)):
             if self.boveda[i].getName()==nombre and self.boveda[i].getTipo()=="Gramatica":
@@ -325,7 +347,7 @@ class Menu():
                     if n>=1:
                         NoTerms+=","+self.boveda[i].getNoTerms()[n].getName()
                     else:
-                        NoTerms=self.boveda[i].getEstados[n].getNameE()
+                        NoTerms=self.boveda[i].getNoTerms()[n].getName()
                 archivo.writelines(NoTerms+"\n")
                 #agregando terminales
                 for m in range(len(self.boveda[i].getTerminales())):
@@ -341,11 +363,12 @@ class Menu():
                 archivo.writelines(NTInicial+"\n")                
                 #agregando producciones             
                 for q in range(len(self.boveda[i].getProducciones())):                    
-                    archivo.writelines(self.boveda[i].getgetProducciones()[q].gettInicial().getName()+">"+self.boveda[i].getProducciones()[q].getTerminal()+" "+self.boveda[i].getProducciones()[q].gettFinal().getName()+"\n")
+                    archivo.writelines(self.boveda[i].getProducciones()[q].gettInicial().getName()+">"+self.boveda[i].getProducciones()[q].getTerminal()+" "+self.boveda[i].getProducciones()[q].gettFinal().getName()+"\n")
                 for p in range(len(self.boveda[i].getNoTerms())):
                     if self.boveda[i].getNoTerms()[p].getEpsilon()==True:
-                        archivo.writelines(self.boveda[i].getNoTerms()[p].getName()+">$")
+                        archivo.writelines(self.boveda[i].getNoTerms()[p].getName()+">$\n")
                 archivo.writelines("%")
+                input("Archivo generado exitosamente.\nRevise el escritorio de su computadora")
         archivo.close()
     #wwwwwwwwwwwwwwwwwwwwwwww
     #eeeeeeeeeeeeeeeeeeeeeeee
@@ -716,7 +739,7 @@ class Menu():
     def CrearNoTerminal(self,nome,NT):
         terminator = noTerminal(NT)
         for a in range(len(self.boveda)):                    
-            if nome == self.boveda[a].getName() and self.boveda[a].getTipo() == "Gramatica":                        
+            if nome == self.boveda[a].getName() and self.boveda[a].getTipo() == "Gramatica":
                 if self.boveda[a].getNoTerms():    
                     flag = 0                                                                                
                     for i in range(len(self.boveda[a].getNoTerms())):                                
@@ -838,13 +861,13 @@ class Menu():
                     for b in range(len(self.boveda[i].getNoTerms())):
                         if frag2[1]== self.boveda[i].getNoTerms()[b].getName():
                             flag2+=1
-                            final = self.boveda[i].getEstados()[b]
+                            final = self.boveda[i].getNoTerms()[b]
                                     #input("final")
 
                     if flag1!=0 and flag2!=0 and flag3!=0:
                         if banderita==0:                            
-                            trancy = Transicion(inicial, final, frag2[0])
-                            self.boveda[i].getTransiciones().append(trancy)
+                            trancy = Produccion(inicial, final, frag2[0])
+                            self.boveda[i].getProducciones().append(trancy)
                         else:
                             print("Ésta acción no se completó.\nUsted está tratando de crear ambiguedad.")
                     else:
@@ -914,7 +937,7 @@ class Menu():
                 for m in range(len(listaAutomatas[i])):
                     if m >=5:
                         self.Transiciones(name,str(listaAutomatas[i][m]))
-                input("AFD cargado correctamente.\nPresione ENTER para volver al menú principal.")
+                input("AFD cargado correctamente.")
 
             else:
                 input("El AFD que se quiere agregar ya existe en memoria")
@@ -932,8 +955,8 @@ class Menu():
         listaGramaticas = []
         #ciclo for para extraer los datos de cada Gramatica, 
         # ponerlos en una lista de listas y eliminar elementos en blanco
-        for i in range(len(divisonGRS)):
-            automata = divisonGRS[i].split('\n')
+        for a in range(len(divisonGRS)):
+            automata = divisonGRS[a].split('\n')
             try:
                 automata.remove('')
                 automata.remove('')
@@ -941,16 +964,16 @@ class Menu():
                 pass
             listaGramaticas.append(automata)
         #Ciclo for para empezar a crear objetos NoTerminales
-        for a in range(len(listaGramaticas)):
+        for i in range(len(listaGramaticas)):
             #verificando si la gramatica que se quiere agregar ya existe
             flag = 0
-            for a in range(len(self.boveda)):
-                if listaGramaticas[i][0] == self.boveda[a].getName():
+            for z in range(len(self.boveda)):
+                if listaGramaticas[i][0] == self.boveda[z].getName():
                     flag +=1
             if flag == 0: #el automata no existe y lo agregamos
                 #tratamos con el nombre
                 name = str(listaGramaticas[i][0])
-                gramatica = noTerminal(name)
+                gramatica = Gramatica(name)
                 self.boveda.append(gramatica)
                 #tratamos con los no terminales
                 noTerms = listaGramaticas[i][1].split(',')
@@ -966,7 +989,7 @@ class Menu():
                 for m in range(len(listaGramaticas[i])):
                     if m >=4:
                         self.CrearProducciones(name,str(listaGramaticas[i][m]))
-                input("Gramatica cargada correctamente.\nPresione ENTER para volver al menú principal.")
+                input("Gramatica cargada correctamente.")
 
             else:
                 input("La gramatica que se quiere agregar ya existe en memoria")

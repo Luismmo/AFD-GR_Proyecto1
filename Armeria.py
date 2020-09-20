@@ -5,7 +5,6 @@ class Aefede(object):
         self.nombre = name
         self.estados= list()
         self.alfabeto = []
-        self.ePrede= None
         self.eInicial = None
         self.eAceptacion = []
         self.transiciones = []
@@ -25,8 +24,6 @@ class Aefede(object):
         return self.transiciones
     def getTipo(self):
         return str(self.tipo)
-    def getPrede(self):
-        return self.ePrede
     #setters
     def setName(self, valor):
         self.nombre = valor
@@ -82,10 +79,8 @@ class Gramatica(object):
         self.noTerms = []
         self.terminales = []
         self.NTinicial = None
-        self.NTprede = None
         self.producciones = []
-        self.tipo = "Gramatica"
-        self.izquierda = False
+        self.tipo = "Gramatica"        
     
     #getters
     def getName(self):
@@ -99,11 +94,7 @@ class Gramatica(object):
     def getProducciones (self):
         return self.producciones
     def getTipo(self):
-        return str(self.tipo)
-    def getIzquierda(self):
-        return self.izquierda
-    def getPrede(self):
-        return self.NTprede
+        return str(self.tipo)    
     
     #setters
     def setName (self, valor):

@@ -1,6 +1,9 @@
 import os
 from io import open 
 import codecs
+a = False
+b = a
+print(b)
 """a = "abcdef"
 split = a.split('%')
 print(a)
@@ -101,7 +104,7 @@ else:
     print("es falso") """
 #septima
 
-a = "a"
+"""a = "a"
 b=", b"
 c= a.__add__(b+", c")
 print(c)
@@ -111,7 +114,7 @@ for a in range(5):
     print(a)
     fin+=str(a)
 print(fin)
-print(len(fin))
+print(len(fin))"""
 
 
  
