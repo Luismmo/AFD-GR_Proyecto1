@@ -21,10 +21,10 @@ class Menu():
         print("Luis Amilcar Morales Xón \n201701059")
         input("\nPresione Enter para continuar")
         #self.clrsrc()
-        try:
-            self.Menu()     
-        except:
-            self.Menu()
+        #try:
+        self.Menu()     
+        #except:
+        #    self.Menu()
 ##menu primer grado
     def Menu(self):
         salida = True		
@@ -273,9 +273,9 @@ class Menu():
                 #agregando estados
                 for n in range(len(self.boveda[i].getEstados())):
                     if n>=1:
-                        estados+=","+self.boveda[i].getEstados[n].getNameE()
+                        estados+=","+self.boveda[i].getEstados()[n].getNameE()
                     else:
-                        estados=self.boveda[i].getEstados[n].getNameE()
+                        estados=self.boveda[i].getEstados()[n].getNameE()
                 archivo.writelines(estados+"\n")
                 #agregando alfabeto
                 for m in range(len(self.boveda[i].getAlfabeto())):
@@ -323,7 +323,7 @@ class Menu():
                 #agregando no terminales
                 for n in range(len(self.boveda[i].getNoTerms())):
                     if n>=1:
-                        NoTerms+=","+self.boveda[i].getNoTerms[n].getName()
+                        NoTerms+=","+self.boveda[i].getNoTerms()[n].getName()
                     else:
                         NoTerms=self.boveda[i].getEstados[n].getNameE()
                 archivo.writelines(NoTerms+"\n")
@@ -564,10 +564,9 @@ class Menu():
         print("AFD llamado: "+nome+"\nEscriba >>salir<< para dejar de ingresar elementos del alfabeto")
         salida = True
         while salida:   
-            dato = str(input("\nIngrese un elemento del alfabeto para el AFD: "))
-            alfa = dato.lower()
+            dato = str(input("\nIngrese un elemento del alfabeto para el AFD: "))            
             if dato != "salir":
-                self.CrearAlfabeto(nome,alfa)
+                self.CrearAlfabeto(nome,dato)
             else:
                 salida = False
 
@@ -577,10 +576,10 @@ class Menu():
                 #viendo si no ingresamos un alfabeto que ya está como estado
                 bandera = 0
                 for k in range(len(self.boveda[a].getEstados())):
-                    if alfa != self.boveda[a].getEstados[k].getNameE():
-                        bandera+=0
+                    if alfa == self.boveda[a].getEstados()[k].getNameE():
+                        bandera+=1
                 if bandera==0:
-                    print("podemos ingresar el alfabeto")
+                    #print("podemos ingresar el alfabeto")
                     if self.boveda[a].getAlfabeto():    
                         flag = 0                                                                                
                         for i in range(len(self.boveda[a].getAlfabeto())):
@@ -737,12 +736,12 @@ class Menu():
         print("Gramatica llamada: "+nome+"\nEscriba >>salir<< para dejar de ingresar terminales.")
         salida = True
         while salida:   
-            dato = str(input("\nIngrese un terminal para la Gramatica: "))
-            zona4 = dato.lower()
+            dato = str(input("\nIngrese un terminal para la Gramatica: "))            
             if dato != "salir":
-                self.CrearTerminales(nome,zona4)
+                self.CrearTerminales(nome,dato)
             else:
                 salida = False
+
     def CrearTerminales(self,nome,zona4):
         for a in range(len(self.boveda)):
             if nome == self.boveda[a].getName() and self.boveda[a].getTipo()== "Gramatica":
@@ -750,7 +749,7 @@ class Menu():
                 bandera = 0
                 for k in range(len(self.boveda[a].getNoTerms())):
                     if zona4 == self.boveda[a].getNoTerms()[k].getName():
-                        bandera+=0
+                        bandera+=1
                 if bandera == 0:
                     #podemos agregar la terminal
                     if self.boveda[a].getTerminales():    
@@ -873,8 +872,8 @@ class Menu():
         listaAutomatas = []
         #ciclo for para extraer los datos de cada automata, 
         # ponerlos en una lista de listas y eliminar elementos en blanco
-        for i in range(len(divisonAFDS)):
-            automata = divisonAFDS[i].split('\n')
+        for a in range(len(divisonAFDS)):
+            automata = divisonAFDS[a].split('\n')
             try:
                 automata.remove('')
                 automata.remove('')
@@ -882,11 +881,11 @@ class Menu():
                 pass
             listaAutomatas.append(automata)
         #Ciclo for para empezar a crear objetos Aefede
-        for a in range(len(listaAutomatas)):
+        for i in range(len(listaAutomatas)):
             #verificando si el automata que se quiere agregar ya existe
             flag = 0
-            for a in range(len(self.boveda)):
-                if listaAutomatas[i][0] == self.boveda[a].getName():
+            for z in range(len(self.boveda)):
+                if listaAutomatas[i][0] == self.boveda[z].getName():
                     flag +=1
             if flag == 0: #el automata no existe y lo agregamos
                 #tratamos con el nombre
