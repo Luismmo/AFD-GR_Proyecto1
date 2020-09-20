@@ -1,10 +1,10 @@
 import os
 from io import open 
 import codecs
-a = "abcdef"
+"""a = "abcdef"
 split = a.split('%')
 print(a)
-print(split)
+print(split)"""
 #print(split[1])
 #pruebas chiquitas para solucionar vergueos grandes
 #primer vergueo
@@ -59,8 +59,8 @@ print(b[0].isupper())
 print(c[1].islower())
 print(c[2].isupper()) """
 
-#cuarta duda
-nombre = input("Ingrese el nombre del archivo para generar el AFD: ")
+#cuarta duda jalando información del archivo
+""" nombre = input("Ingrese el nombre del archivo para generar el AFD: ")
 name = nombre.split('.')
 print(name[0])
 archivo = open(nombre, 'r')
@@ -87,7 +87,7 @@ print(len(automataN[2]))
 print(automataN[0])
 print(automataN[0][12])
 print(automataN[1])
-input(automataN[2])
+input(automataN[2]) """
 
 #quinta
 #a=input("aaa: ")
@@ -101,16 +101,18 @@ else:
     print("es falso") """
 #septima
 
-""" a = "a"
+a = "a"
 b=", b"
 c= a.__add__(b+", c")
 print(c)
 num=""
 fin =""
 for a in range(5):
+    print(a)
     fin+=str(a)
 print(fin)
- """
+print(len(fin))
+
 
  
 #generando un hermoso pdf :3
