@@ -1,9 +1,16 @@
 import os
 from io import open 
 import codecs
-a = False
-b = a
-print(b)
+#a = False
+#b = a
+#print(b)
+"""def suma(a,b):
+    suma = a + b
+    return suma
+a = int(input("uno: "))
+b = int(input("uno: "))
+print(suma(a,b))"""
+
 """a = "abcdef"
 split = a.split('%')
 print(a)
@@ -97,24 +104,25 @@ input(automataN[2]) """
 #print(a.islower())
 
 ##sexta
-""" a = True
+"""a = True
 if a == True:
     print("es verdadero")
 else:
     print("es falso") """
 #septima
 
-"""a = "a"
+a = "a"
 b=", b"
 c= a.__add__(b+", c")
 print(c)
 num=""
 fin =""
-for a in range(5):
-    print(a)
+for a in range(5):    
+    print(a)        
     fin+=str(a)
 print(fin)
-print(len(fin))"""
+print(len(fin))
+print(fin[2])
 
 
  

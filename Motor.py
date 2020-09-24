@@ -8,6 +8,7 @@ import subprocess
 
 class Menu():
     def __init__(self):
+        self.aceptamos = False
         self.boveda = []
         valor ="  "
         teniaque = Aefede(valor)
@@ -91,7 +92,9 @@ class Menu():
                 self.cargaAFD()
                 self.clrsrc()
             elif opcion == 3:
-                input("Evaluar cadena")                            
+                self.clrsrc()
+                self.SubEChain()
+                self.clrsrc()
             elif opcion == 4:
                 self.clrsrc()
                 self.escribirAFD()
@@ -101,7 +104,9 @@ class Menu():
                 self.generarHermosoPFD_AFD()
                 self.clrsrc()
             elif opcion == 6:
-                input("generar gramatica")
+                self.clrsrc()
+                self.generarGramaticaConsola()
+                self.clrsrc()
             elif opcion == 7:
                 salida1 = False                
             else:
@@ -166,54 +171,50 @@ class Menu():
                 input("Ingrese una opción valida")            
     
     ##pinche menu evaluar cadenas
-    def SubEChain(self):
-        name = input('Ingrese el nombre de la Gramatica: ')
-        for i in range(len(self.boveda)):
-            if name == str(self.boveda[i]):
-                saldo = True
-                while saldo:
-                    self.clrsrc()
-                    print("********** Menú de Evaluar Cadenas **********\n")
-                    print('1- Solo validar')
-                    print('2- Ruta en AFD')
-                    print('3- Expandir con gramatica')
-                    print('4- Ayuda')
-                    print('5- Menu principal\n')
-                    opcion = int(input('Ingrese una opción: '))
-                    if opcion == 1:
-                        try:
-                            input("validando cadena")
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 2:
-                        try:
-                            input("ruta en afd")
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 3:
-                        try:
-                            input("ruta en gramatica")
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
-                    elif opcion == 4:
-                        self.clrsrc()
-                        self.Help()
-                    elif opcion == 5:
-                        saldo = False
-                        try:
-                            self.Menu()
-                        except:
-                            print("Parece que tenemos problemas, se va a estabilizar.")
+    def SubEChain(self):        
+        print("Lista de automatas cargados en el sistema.\n")
+        for a in range(len(self.boveda)):
+            if self.boveda[a].getTipo()=="AFD":
+                print("-> "+self.boveda[a].getName())
+        auto = str(input("\nIngrese el nombre del automata que quiere para validar una cadena: "))
+        for i in range(len(self.boveda)):            
+            if auto == self.boveda[i].getName() and self.boveda[i].getTipo() =="AFD":
+                print("1- Validar cadena")
+                print("2- Ruta en AFD\n")
+                opcion = str(input("Ingrese una opcion: "))
+                if opcion=="1":
+                    cadena = str(input("\nIngrese la cadena a evaluar: "))
+                    self.validarCadena(auto, cadena)
+                    print(self.aceptamos)
+                    if self.aceptamos == True:
+                        input("¡CADENA VALIDA!")
                     else:
-                        self.clrsrc()
-                        input("Ingrese una opción valida")
-            else:
-                input("Eso no funcionó, intentelo otra vez. \nEscribe bien el nombre.")
-    
+                        input("¡CADENA INVALIDA!")
+                elif opcion =="2":
+                    print("saquemos la ruta")
 
-    
+    def validarCadena(self, nome,cadena):        
+        bandera = 0        
+        final = ""
+        for i in range(len(self.boveda)):
+            if nome == self.boveda[i] and self.boveda[i].getTipo()=="AFD":
+                #for para la cadena ingresada
+                for a in range(len(cadena.__len__())):
+                    #for para recorrer las transiciones del automata
+                    for b in range(len(self.boveda[i].getTransiciones())):
+                        if bandera ==0:
+                            if self.boveda[i].getTransiciones()[b].geteInicial().getInicio()==True and cadena[a]==self.boveda[i].getTransiciones()[b].getEntrada():
+                                bandera+=1                                
+                                aceptamos = self.boveda[i].getTransiciones()[b].geteFinal().getAcepta()
+                                final = self.boveda[i].getTransiciones()[b].geteFinal().getNameE()
+                        else:
+                            if final == self.boveda[i].getTransiciones()[b].geteInicial().getNameE() and cadena[a]==self.boveda[i].getTransiciones()[b].getEntrada():
+                                aceptamos = self.boveda[i].getTransiciones()[b].geteFinal().getAcepta()
+                                final = self.boveda[i].getTransiciones()[b].geteFinal().getNameE()
+        
+
+
     #Pinche menu cargar archivo    
-
     def generarAFD(self,nome):
         for a in range(len(self.boveda)):
             if self.boveda[a].getName()==nome and self.boveda[a].getTipo()=="Gramatica":
@@ -410,6 +411,26 @@ class Menu():
                     print(self.boveda[a].getTransiciones()[q].geteInicial()+","+self.boveda[a].getTransiciones()[q].geteFinal()+";"+self.boveda[a].getTransiciones()[q].getEntrada())
                 input("Fin del reporte, Presione Enter para continuar.")
 
+    def generarGramaticaConsola(self):
+        print("Listando todos los automatas cargados en memoria:\n")
+        for i in range(len(self.boveda)):
+            if self.boveda[i].getTipo()=="AFD":
+                print("->"+self.boveda[i].getName())
+        nome = str(input("Ingrese el nombre del AFD para generar la gramatica: "))
+        print(" ")
+        flag1 = 0
+        flag2 = 0
+        for a in range(len(self.boveda)):
+            if nome == self.boveda[a].getName() and self.boveda[a].getTipo()=="AFD":
+                for b in range(len(self.boveda)):
+                    if nome == self.boveda[a].getName() and self.boveda[a].getTipo()=="Gramatica":
+                        #Ya existe no hay que agreagarlo sino mostrarlo
+                        flag1+=1
+                if flag1==0:
+                    #no existe hay que agreagarlo 
+                    self.generarGR(nome)
+        self.detalleGR(nome)
+
     def detalleGR(self, nome):
         self.clrsrc()
         for a in range(len(self.boveda)):
@@ -433,8 +454,8 @@ class Menu():
                 #Producciones
                 print("Producciones:")
                 for z in range(len(self.boveda[a].getProducciones())):
-                    print(self.boveda[a].getProducciones()[z].gettInicial()+" > "+self.boveda[a].getProducciones()[z].getTerminal()+" "+self.boveda[a].getProducciones()[z].gettFinal())
-                input("Fin del reporte, Presione Enter para continuar.")                  
+                    print(self.boveda[a].getProducciones()[z].gettInicial().getName()+" > "+self.boveda[a].getProducciones()[z].getTerminal()+" "+self.boveda[a].getProducciones()[z].gettFinal().getName())
+                input("Fin, Presione Enter para continuar.")                  
 
     def generarHermosoPFD_GR(self):
             print("Lista de gramaticas regulares en el sistema:\n")
