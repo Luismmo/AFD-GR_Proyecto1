@@ -3,9 +3,8 @@ import codecs
 class Aefede(object):
     def __init__(self, name):        
         self.nombre = name
-        self.estados= list()
-        self.alfabeto = []
-        self.eInicial = None
+        self.estados= []
+        self.alfabeto = []        
         self.eAceptacion = []
         self.transiciones = []
         self.tipo = "AFD"
@@ -29,8 +28,6 @@ class Aefede(object):
         self.nombre = valor
     def seteInicial(self, valor):
         self.eInicial = valor
-    def setPrede(self,valor):        
-        self.ePrede=valor
     def setAlfabeto(self,valor):
         self.alfabeto=valor
 
@@ -46,7 +43,7 @@ class Transicion(object):
     def geteFinal(self):
         return self.eFinal
     def getEntrada(self):
-        return str(self.entrada)
+        return str(self.entrada)  
 
 class Estado(object):
     def __init__(self, nombre):
@@ -54,6 +51,7 @@ class Estado(object):
         self.aceptacion = False
         self.inicio = False
         self.salidas= []
+        self.alto = False
     #Getters
     def getNameE(self):
         return str(self.name)
@@ -63,6 +61,8 @@ class Estado(object):
         return self.inicio
     def getSalidas(self):        
         return self.salidas
+    def getAlto(self):
+        return self.alto
 
     def setSalidas(self,valor):
         self.salidas=valor
@@ -70,6 +70,8 @@ class Estado(object):
         self.aceptacion = valor
     def setInicio(self, valor):
         self.inicio = valor
+    def setAlto(self, valor):
+        self.alto = valor
 #frontera
 #frontera
 #fabrica de gramaticas
@@ -77,8 +79,7 @@ class Gramatica(object):
     def __init__(self, name):
         self.nombre = name
         self.noTerms = []
-        self.terminales = []
-        self.NTinicial = None
+        self.terminales = []        
         self.producciones = []
         self.tipo = "Gramatica"        
     
@@ -97,14 +98,12 @@ class Gramatica(object):
         return str(self.tipo)    
     
     #setters
-    def setName (self, valor):
+    def setName(self, valor):
         self.nombre= valor
     def setNTinicial(self, valor):
         self.NTinicial = valor
     def setIzquierda(self,valor):
-        self.izquierda=valor
-    def setPrede(self,valor):
-        self.NTprede = valor
+        self.izquierda=valor    
     def setTerminales(self,valor):
         self.terminales=valor
 
@@ -114,6 +113,7 @@ class noTerminal(object):
         self.epsilon = False
         self.inicio = False
         self.salidas = []
+        self.alto = False
     #getters
     def getName(self):
         return str(self.name)
@@ -123,6 +123,8 @@ class noTerminal(object):
         return self.inicio
     def getSalidas(self):
         return self.salidas
+    def getAlto(self):
+        return self.alto
 
     def setSalidas(self,valor):
         self.salidas=valor
@@ -130,6 +132,8 @@ class noTerminal(object):
         self.inicio=valor
     def setEpsilon(self, valor):
         self.epsilon=valor
+    def setAlto(self,valor):
+        self.alto = valor
 
 class Produccion (object):
     def __init__(self, inicial, final, termi):
