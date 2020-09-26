@@ -125,6 +125,8 @@ print(len(fin))
 print(fin[2])
 kd = False
 print("esto es " + str(kd))
+be = "a"
+print(be+"'")
 
 
  
